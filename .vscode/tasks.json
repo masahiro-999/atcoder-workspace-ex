@@ -6,7 +6,7 @@
         {
             "label": "atcoder-tools test",
             "type": "shell",
-            "command": "cd ${fileDirname} && atcoder-tools test",
+            "command": "cd ${fileDirname} && atcoder-tools test --config ${workspaceFolder}/atcodertools-ex.toml",
             "group": "atcoder-tools",
             "presentation": {
               "reveal": "always",
@@ -17,7 +17,7 @@
           {
             "label": "atcoder-tools submit",
             "type": "shell",
-            "command": "cd ${fileDirname} && atcoder-tools submit",
+            "command": "cd ${fileDirname} && atcoder-tools submit --config ${workspaceFolder}/atcodertools-ex.toml",
             "group": "atcoder-tools",
             "presentation": {
               "reveal": "always",
