@@ -4,7 +4,6 @@ defmodule Main do
         case IO.getn(:stdio, "", 1) do
           " " -> acc
           "\n" -> acc
-          {:error, _} -> acc
           x -> next_token(acc <> x)
         end
     end
