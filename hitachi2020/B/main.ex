@@ -12,11 +12,14 @@ defmodule Main do
     def li(), do: input() |> String.split(" ") |> Enum.map(&String.to_integer/1)
 
 
-    def solve(a, b, m, a_list, b_list, x, y, c) do
+    def solve(a, b, m, a_list, b_list, xyc) do
         without_discount = hd(Enum.sort(a_list)) + hd(Enum.sort(b_list))
+        a_tuple = List.to_tuple(a_list)
+        b_tuple = List.to_tuple(b_list)
+
         with_discount =
-        Enum.zip([x,y,c])
-         |> Enum.map(fn {x,y,c} -> Enum.at(a_list,x-1)+Enum.at(b_list,y-1)-c end)
+        xyc
+         |> Enum.map(fn [x,y,c] -> elem(a_tuple,x-1)+elem(b_tuple,y-1)-c end)
          |> Enum.min()
         IO.puts(min(without_discount, with_discount))
     end
@@ -27,8 +30,8 @@ defmodule Main do
         m = ii()
         a_list = li()  # type: "List[int]"
         b_list = li()  # type: "List[int]"
-        [x,y,c] = (for _ <- 1..m, do: li())|> Enum.zip_with(&(&1))
-        solve(a, b, m, a_list, b_list, x, y, c)
+        xyc = (for _ <- 1..m, do: li())
+        solve(a, b, m, a_list, b_list, xyc)
     end
 
 end
