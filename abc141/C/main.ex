@@ -12,20 +12,29 @@ defmodule Main do
     def linei(), do: input() |> String.to_integer()
     def li(), do: input() |> String.split(" ") |> Enum.map(&String.to_integer/1)
 
+    def inc_table(t, i) do
+        ret = :ets.lookup(t,i)
+        {_, val} = hd(ret)
+        :ets.insert(t, {i,val+1})
+    end
+
     def solve(n, k, q, a) do
-        t = Tuple.duplicate(k-q, n)
+        t = :ets.new(:user_lookup, [:set, :protected, :named_table])
+        for i <- 0..n-1, do: :ets.insert(t, {i,k-q})
 
-        {time,t} = :timer.tc(Enum, :reduce,[a,t, fn (a,t) -> put_elem(t,a-1,elem(t,a-1)+1) end])
-        # t = a |> Enum.reduce(t, fn (a,t) -> put_elem(t,a-1,elem(t,a-1)+1) end)
+        a |> Enum.map(&inc_table(t,&1-1))
 
-        Tuple.to_list(t)
+        (for i <- 0..n-1 do
+            :ets.lookup(t,i)
+            |> hd()
+            |> elem(1)
+        end)
         |> Enum.map(fn
             x when x>0 -> "Yes"
             x -> "No"
         end)
         |> Enum.join("\n")
         |> IO.puts()
-        IO.inspect(time, level: "time")
     end
 
     def main() do
