@@ -18,10 +18,10 @@ defmodule Main do
         end)
         # |> IO.inspect()
         |> Enum.all?(fn {k,v} -> rem(v,2)==0 end)
-        |> then(fn
+        |> (fn
             :true -> "Yes"
             :false -> "No"
-        end)
+        end).()
         |>IO.puts()
     end
 
