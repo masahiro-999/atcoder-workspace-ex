@@ -11,7 +11,7 @@ defmodule Main do
     def ii(), do: next_token() |> String.to_integer()
     def li(), do: input() |> String.split(" ") |> Enum.map(&String.to_integer/1)
 
-    def find_ans(a,b,101) do
+    def find_ans(a,b,1251) do
         -1
     end
 
