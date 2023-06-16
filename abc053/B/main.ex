@@ -14,9 +14,7 @@ defmodule Main do
     def find(s,c) do
         s
         |> String.to_charlist()
-        |> Enum.with_index()
-        |> Enum.find(nil, fn {v,i} -> v == c end)
-        |> elem(1)
+        |> Enum.find_index(fn v -> v == c end)
     end
 
     def solve(s) do
