@@ -31,7 +31,6 @@ defmodule Main do
 
     def solve(_n, _m, ps) do
         ac_table = get_ans(ps, %{})
-        ac2 = Enum.count(ac_table)
         ac = Enum.count(ac_table, fn {_, {ac, _}} -> ac >0 end)
         wa =
             ac_table
