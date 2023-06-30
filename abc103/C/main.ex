@@ -17,11 +17,12 @@ defmodule Main do
 
     def lcm(a, b), do: div(a * b, gcd(a, b))
 
-    def solve(n, a) do
-        m = for x <-a, reduce: 1 do
-          acc -> lcm(x, acc)
-        end -1
+    def lcm([h|[]]), do: h
+    def lcm([h|t]), do: lcm(h,lcm(t))
 
+    def solve(n, a) do
+        m = lcm(a) - 1
+        
         a
         |> Enum.map(fn x -> rem(m, x) end)
         |> Enum.sum()
