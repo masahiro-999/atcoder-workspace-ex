@@ -11,14 +11,12 @@ defmodule Main do
     def ii(), do: next_token() |> String.to_integer()
     def li(), do: input() |> String.split(" ") |> Enum.map(&String.to_integer/1)
 
+    def get_ans(i, limit, count) when i <= limit, do: get_ans(i*2, limit, count + 1)
+    def get_ans(i, limit, count) when i > limit, do: count
 
     def solve(x, y) do
-        # 314159265 358979323846264338
-        div(y,x)
-        |> Integer.to_string(2)
-        |> String.length()
+        get_ans(x, y, 0)
         |>IO.puts()
-
     end
 
     def main() do
