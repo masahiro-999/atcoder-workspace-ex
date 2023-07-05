@@ -45,6 +45,7 @@ defmodule Main do
         # IO.inspect({i,w_bit})
         if is_all_white(h, w, c, i, w_bit) do
             0..(1<<<w)-1
+            |> Enum.filter(fn x -> ((x<<<1) &&& x) == 0 end)
             |> Enum.reduce(0, fn
                 x, acc -> acc +
                     if is_valid(x, w_bit) do
