@@ -11,7 +11,7 @@ defmodule Main do
     def ii(), do: next_token() |> String.to_integer()
     def li(), do: input() |> String.split(" ") |> Enum.map(&String.to_integer/1)
 
-    # MOD = 998244353
+    @mod 998244353
 
     def solve(n) do
 
@@ -34,10 +34,13 @@ defmodule Main do
         # print(ans)
 
         t = create_all_one_list(9)
-        # tに対して、add_tuple_with_shiftをn-1回適用する
-        for i <- 1..n-1, do: t = add_list_with_shift(t)
+        # tに対して、add_list_with_shiftをn-1回適用する
+
+        t = for _ <- 1..n-1, reduce: t do
+            acc -> add_list_with_shift(acc)
+        end
         # tの要素の合計をMODで割った余りを出力する
-        IO.puts(Enum.sum(t) |> rem(MOD))
+        IO.puts(Enum.sum(t) |> rem(@mod))
     end
 
     def create_all_one_list(size) do
@@ -50,10 +53,10 @@ defmodule Main do
     def add_list_with_shift(l) do
         #   リストlの要素を以下のようにシフトして加算したリストを返す。
         # ret[i] = l[i-1] + l[i] + l[i+1]
-        shift_left1 = Enum.drop(l, 1)
+        shift_left1 = Enum.drop(l++[0], 1)
         shift_right1 = Enum.take(l, length(l) - 1)
         shift_right1 = [0 | shift_right1]
-        Enum.zip3(shift_left1, l, shift_right1) |> Enum.map(fn {x, y, z} -> x + y + z end)
+        Enum.zip([shift_left1, l, shift_right1]) |> Enum.map(fn {x, y, z} -> x + y + z end)
     end
 
 
