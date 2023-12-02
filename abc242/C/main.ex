@@ -15,32 +15,16 @@ defmodule Main do
 
     def solve(n) do
 
-        # 次のPythonのコードをElixirに変換する
-        # Elixirは関数型言語であることを考慮すること。
-        # N = II()
-        # dp = [[0]*9 for _ in range(N)]
-        # for i in range(9):
-        #     dp[0][i] = 1
-        # for i in range(0,N-1):
-        #     for j in range(9):
-        #         if j > 0:
-        #             dp[i+1][j-1] += dp[i][j]
-        #         if j < 8:
-        #             dp[i+1][j+1] += dp[i][j]
-        #         dp[i+1][j] += dp[i][j]
-        #         dp[i+1][j] %= MOD
-        # # print(dp)
-        # ans = sum(dp[N-1]) % MOD
-        # print(ans)
-
         t = create_all_one_list(9)
         # tに対して、add_list_with_shiftをn-1回適用する
-
         t = for _ <- 1..n-1, reduce: t do
             acc -> add_list_with_shift(acc)
         end
         # tの要素の合計をMODで割った余りを出力する
-        IO.puts(Enum.sum(t) |> rem(@mod))
+        t
+        |>Enum.sum()
+        |>rem(@mod)
+        |>IO.puts()
     end
 
     def create_all_one_list(size) do
@@ -51,12 +35,13 @@ defmodule Main do
 
 
     def add_list_with_shift(l) do
-        #   リストlの要素を以下のようにシフトして加算したリストを返す。
-        # ret[i] = l[i-1] + l[i] + l[i+1]
-        shift_left1 = Enum.drop(l++[0], 1)
-        shift_right1 = Enum.take(l, length(l) - 1)
-        shift_right1 = [0 | shift_right1]
-        Enum.zip([shift_left1, l, shift_right1]) |> Enum.map(fn {x, y, z} -> x + y + z end)
+        Stream.zip([
+            Stream.concat([l,[0]])|>Stream.drop(1),
+            l,
+            Stream.concat([[0],l])
+        ])
+        |> Stream.map(fn {x, y, z} -> rem(x + y + z, @mod) end)
+        |> Enum.to_list()
     end
 
 
