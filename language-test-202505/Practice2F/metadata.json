@@ -1,0 +1,17 @@
+{
+ "code_filename": "main.ex",
+ "judge": {
+  "judge_type": "normal"
+ },
+ "lang": "elixir",
+ "problem": {
+  "alphabet": "Practice2F",
+  "contest": {
+   "contest_id": "language-test-202505"
+  },
+  "problem_id": "practice2_f"
+ },
+ "sample_in_pattern": "in_*.txt",
+ "sample_out_pattern": "out_*.txt",
+ "timeout_ms": 5000
+}
